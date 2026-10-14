@@ -1,0 +1,97 @@
+{
+  "schema": "agentready-capabilities-v1",
+  "capabilities": [
+    {
+      "id": "ai_agent",
+      "label": "AI agent / tool execution",
+      "providers": [
+        "codex",
+        "hermes"
+      ],
+      "rule": "Reuse one already-authorized agent; don't start competing schedulers."
+    },
+    {
+      "id": "work_messages",
+      "label": "Work messages and decisions",
+      "providers": [
+        "feishu",
+        "lark_cli"
+      ],
+      "rule": "Feishu remains the system of record; use lark-cli for read-only, identity-scoped extraction."
+    },
+    {
+      "id": "calendar",
+      "label": "Personal events",
+      "providers": [
+        "apple_calendar"
+      ],
+      "rule": "One authoritative calendar; read-only aggregation elsewhere."
+    },
+    {
+      "id": "tasks",
+      "label": "Personal reminders",
+      "providers": [
+        "apple_reminders"
+      ],
+      "rule": "Create only after explicit confirmation in native provider."
+    },
+    {
+      "id": "quick_capture",
+      "label": "Phone shortcuts and quick capture",
+      "providers": [
+        "shortcuts"
+      ],
+      "rule": "Use native shortcut entry points, no duplicate client."
+    },
+    {
+      "id": "activity_history",
+      "label": "Desktop activity journal",
+      "providers": [
+        "dayflow"
+      ],
+      "rule": "Optional, user-authorized local capture."
+    },
+    {
+      "id": "household_inventory",
+      "label": "Item inventory and warranty",
+      "providers": [
+        "homebox"
+      ],
+      "rule": "HomeBox owns item details, photos, labels and maintenance."
+    },
+    {
+      "id": "knowledge",
+      "label": "Notes and long-term documents",
+      "providers": [
+        "obsidian"
+      ],
+      "rule": "Notes remain in the user's existing vault."
+    },
+    {
+      "id": "dashboard",
+      "label": "Cross-source visual overview",
+      "providers": [
+        "nocobase"
+      ],
+      "rule": "Optional view with source links; not a second master database."
+    },
+    {
+      "id": "work_tasks",
+      "label": "Feishu work tasks (not Apple Reminders)",
+      "providers": [
+        "lark_cli",
+        "feishu"
+      ],
+      "rule": "Read from user OAuth; do not mirror to personal DB unless explicitly allowed."
+    },
+    {
+      "id": "work_calendar",
+      "label": "Feishu work calendar (not Apple Calendar)",
+      "providers": [
+        "lark_cli",
+        "feishu"
+      ],
+      "rule": "Missing calendar scope = BLOCKED, never interpret as no meetings."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "team",
+  "description": "Team: agent + Feishu native workspace and personal planning.",
+  "components": [
+    "codex",
+    "feishu",
+    "lark_cli",
+    "apple_calendar",
+    "apple_reminders",
+    "shortcuts"
+  ]
+}

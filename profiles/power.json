@@ -1,0 +1,17 @@
+{
+  "name": "power",
+  "description": "Power user: comprehensive work+life, optional AI memory and capture.",
+  "components": [
+    "codex",
+    "feishu",
+    "lark_cli",
+    "apple_calendar",
+    "apple_reminders",
+    "shortcuts",
+    "dayflow",
+    "hermes",
+    "homebox",
+    "nocobase",
+    "obsidian"
+  ]
+}

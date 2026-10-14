@@ -1,0 +1,220 @@
+{
+  "schema": "agentready-adapters-v1",
+  "adapters": {
+    "codex": {
+      "label": "OpenAI Codex",
+      "category": "agent",
+      "purpose": "Agent capable of interpreting the portable skills",
+      "probe": {
+        "commands": [
+          "codex"
+        ],
+        "mac_apps": [
+          "Codex.app"
+        ]
+      },
+      "macos_install": {
+        "cask": [
+          "codex"
+        ]
+      },
+      "setup": [
+        "Sign in through the app or CLI",
+        "Install skills in your agent's supported directory"
+      ],
+      "permissions": [
+        "Sign in to your own AI provider account"
+      ]
+    },
+    "feishu": {
+      "label": "Feishu / Lark",
+      "category": "work",
+      "purpose": "Company messaging, tasks, calendar and documents in their native application",
+      "probe": {
+        "mac_apps": [
+          "飞书.app",
+          "Lark.app",
+          "Feishu.app"
+        ]
+      },
+      "macos_install": {
+        "cask": [
+          "feishu"
+        ]
+      },
+      "setup": [
+        "Sign in to the intended organization",
+        "Connect official API/CLI only where available"
+      ],
+      "permissions": [
+        "Approve requested Feishu user OAuth scopes",
+        "Request organization resource access if needed"
+      ]
+    },
+    "apple_calendar": {
+      "label": "Apple Calendar",
+      "category": "planning",
+      "purpose": "Native calendar is the schedule source of truth",
+      "probe": {
+        "mac_apps": [
+          "Calendar.app"
+        ]
+      },
+      "setup": [
+        "Open system Calendar and verify the intended calendar account"
+      ],
+      "permissions": [
+        "Calendar access is approved interactively for the selected tool"
+      ]
+    },
+    "apple_reminders": {
+      "label": "Apple Reminders",
+      "category": "planning",
+      "purpose": "Native personal tasks and notifications",
+      "probe": {
+        "mac_apps": [
+          "Reminders.app"
+        ],
+        "commands": [
+          "remindctl"
+        ]
+      },
+      "setup": [
+        "Connect iCloud if desired",
+        "Install or use a trusted Reminders CLI only if needed"
+      ],
+      "permissions": [
+        "Approve Reminders access interactively"
+      ]
+    },
+    "shortcuts": {
+      "label": "Apple Shortcuts",
+      "category": "quick-actions",
+      "purpose": "iPhone/Mac quick capture and user-initiated actions",
+      "probe": {
+        "commands": [
+          "shortcuts"
+        ],
+        "mac_apps": [
+          "Shortcuts.app"
+        ]
+      },
+      "setup": [
+        "Review each automation before running it"
+      ],
+      "permissions": [
+        "Approve per-action Shortcuts prompts"
+      ]
+    },
+    "dayflow": {
+      "label": "Dayflow",
+      "category": "capture",
+      "purpose": "Optional macOS activity journal; agent reads summaries via vendor CLI/MCP",
+      "probe": {
+        "mac_apps": [
+          "Dayflow.app"
+        ],
+        "commands": [
+          "dayflow"
+        ]
+      },
+      "macos_install": {
+        "cask": [
+          "dayflow"
+        ]
+      },
+      "setup": [
+        "Review capture exclusions and model processor",
+        "Verify official CLI/MCP compatibility with the installed release"
+      ],
+      "permissions": [
+        "Grant Screen Recording only after understanding captured content",
+        "Review cloud AI and audio-processing choices"
+      ]
+    },
+    "hermes": {
+      "label": "Hermes Agent",
+      "category": "assistant",
+      "purpose": "Optional agent gateway, memory and scheduling; connect rather than duplicate",
+      "probe": {
+        "commands": [
+          "hermes"
+        ]
+      },
+      "setup": [
+        "Select an existing local or remote instance",
+        "Verify authentic endpoint identity and ownership",
+        "Do not start a duplicate scheduler"
+      ],
+      "permissions": [
+        "Approve gateway token/OAuth via a supported secret manager"
+      ]
+    },
+    "homebox": {
+      "label": "HomeBox",
+      "category": "inventory",
+      "purpose": "Dedicated native web UI for home items, receipts, locations and maintenance",
+      "probe": {},
+      "setup": [
+        "Connect a self-hosted or trusted existing HomeBox instance",
+        "Use its native UI for item details; link from any overview"
+      ],
+      "permissions": [
+        "Approve login to your own HomeBox service"
+      ]
+    },
+    "nocobase": {
+      "label": "NocoBase",
+      "category": "dashboard",
+      "purpose": "Optional structured cross-source dashboard; not a replacement for native tools",
+      "probe": {},
+      "setup": [
+        "Reuse an existing authorized NocoBase instance if present",
+        "Use native mobile layout and built-in MCP with scoped API key"
+      ],
+      "permissions": [
+        "Grant read-only access first; independently verify any writes"
+      ]
+    },
+    "obsidian": {
+      "label": "Obsidian",
+      "category": "knowledge",
+      "purpose": "Personal note vault, keeps its native editor and data ownership",
+      "probe": {
+        "mac_apps": [
+          "Obsidian.app"
+        ]
+      },
+      "macos_install": {
+        "cask": [
+          "obsidian"
+        ]
+      },
+      "setup": [
+        "Open existing vault through your chosen sync method"
+      ],
+      "permissions": [
+        "Grant access to selected vaults, not the entire home directory"
+      ]
+    },
+    "lark_cli": {
+      "label": "Lark CLI (Feishu OpenAPI)",
+      "category": "connector",
+      "purpose": "Direct Feishu tasks, calendar, message and document access using existing bot/user OAuth; no Hermes needed",
+      "probe": {
+        "commands": [
+          "lark-cli"
+        ]
+      },
+      "setup": [
+        "Reuse your trusted organization lark-cli distribution (do not install an unverified namesake)",
+        "Sign in through lark-cli native user OAuth when necessary",
+        "Verify user vs bot identity for each command, request missing resource scopes"
+      ],
+      "permissions": [
+        "OAuth and organization ACL apply to the CLI identity, not to Hermes",
+        "Company-owned records remain in company-approved systems"
+      ]
+    }
+  }
+}
