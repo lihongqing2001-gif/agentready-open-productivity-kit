@@ -22,9 +22,9 @@ Official project: https://github.com/larksuite/cli (installation: `npx @larksuit
 
 ```bash
 python3 agentready.py brief                         # completely offline preview
-python3 agentready.py brief --live                  # today's *work* tasks + calendar via user OAuth
-python3 agentready.py brief --live --details        # include titles, avoid shared logs
-python3 agentready.py brief --live --message-query 待办  # explicit bounded IM search
+python3 agentready.py brief --live --lark-profile YOUR_PROFILE                  # today's *work* tasks + calendar via user OAuth
+python3 agentready.py brief --live --lark-profile YOUR_PROFILE --details        # include titles, avoid shared logs
+python3 agentready.py brief --live --lark-profile YOUR_PROFILE --message-query 待办  # explicit bounded IM search
 ```
 
 Expected behaviors: missing lark-cli, missing scope, malformed API response, timeout -> **BLOCKED**, not 0 tasks. Pagination flag -> **PARTIAL**, not complete. Business data is never sent to a SaaS or personal server by this code. `--live` runs on the calling device/container and requires that identity already be authorized there. Command output is memory-only unless `--output` is specified.
@@ -42,3 +42,7 @@ Expected behaviors: missing lark-cli, missing scope, malformed API response, tim
 1. **Codex only:** Codex skill -> `agentready.py brief` -> `lark-cli` -> source brief. For daily delivery, use a single approved OS scheduler configured separately.
 2. **Hermes optional:** Hermes Skill/Cron -> the same CLI command in its own authorized environment -> DM using an already-connected work channel. Check that the Hermes host has the CLI and OAuth itself; Mac credentials do not magically exist in a server container.
 3. **Other Agent Skills client:** call the same Python CLI via the agent's terminal integration, and preserve read-only mode by default.
+
+## v0.4 contract
+
+Use the selected profile for every command. Verify user identity with `lark-cli --profile YOUR_PROFILE auth status --json --verify` before live use. Calendar commands include explicit local-day bounds. Task reads are bounded to one page; has_more means PARTIAL. Missing scopes are sanitized and preserved, completed tasks and cancelled events are excluded. The report never schedules notifications.

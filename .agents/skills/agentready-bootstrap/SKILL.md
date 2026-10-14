@@ -7,7 +7,7 @@ description: Help a person initialize a new computer as an AI-assisted productiv
 
 Read the project `README.md`, `AGENTS.md`, and `docs/AUTHORIZATION.md` first.
 
-1. Ask only for the intended platform and goal if not available. Let users choose `starter`, `team`, `life`, or `power`. macOS has the only automated installer in v0.2; all other platforms are planning-only.
+1. Ask only for the intended platform and goal if not available. Let users choose `starter`, `team`, `life`, or `power`. macOS has the only automated installer in v0.4; all other platforms are planning-only.
 2. Run `python3 agentready.py doctor --profile <name>`, then `coverage` and `plan`. Offer `wizard --profile <name> --output my-config.json` if they want a reusable personal selection. Read `registry/adapters.json` and check for other existing tools before adding anything.
 3. Generate a macOS installation preview with `python3 agentready.py brewfile --profile <name>`; explain the installed/not-installed distinction, native apps, remote-only apps and possible conflicts.
 4. Run `python3 agentready.py install --profile <name> --apply` **only after the user explicitly approves the entire install batch**. `install` without `--apply` is a dry run.

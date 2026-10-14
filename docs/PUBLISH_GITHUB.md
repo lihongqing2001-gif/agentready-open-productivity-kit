@@ -7,3 +7,5 @@
 5. Push the audited default branch; verify GitHub Actions, README, no secrets and real public URL. Report exact failure if CLI lacks permission.
 
 The bundled artifact was **not** pushed to GitHub by the package builder. It contains no GitHub API key and is intentionally not self-publishing. Use a dry-run/secrets scan before public upload.
+
+Use `python3 scripts/audit_public.py` on the clean candidate including Git history, then `bash scripts/publish_github.sh` for a dry run. Explicit `--apply` runs tests, audit, authentication and repository-existence checks before publication; an existing repository stops for review. Recheck GitHub Actions afterwards; local tests are not remote CI results. Private handoffs must remain outside public history.
