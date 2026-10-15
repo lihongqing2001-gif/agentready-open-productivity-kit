@@ -24,6 +24,21 @@ class V04Tests(unittest.TestCase):
         rows, more, _ = _extract({'has_more': True, 'data': {'items': []}}, 'tasks')
         self.assertTrue(more)
 
+    def test_calendar_list_envelope(self):
+        rows, more, key = _extract({'ok': True, 'data': [{'summary': 'Synthetic event'}], 'meta': {'count': 1}}, 'calendar')
+        self.assertEqual(rows, [{'summary': 'Synthetic event'}])
+        self.assertFalse(more)
+        self.assertEqual(key, 'data')
+
+    def test_empty_list_envelope_preserves_pagination(self):
+        rows, more, _ = _extract({'ok': True, 'data': [], 'has_more': True}, 'calendar')
+        self.assertEqual(rows, [])
+        self.assertTrue(more)
+
+    def test_list_envelope_rejects_malformed_records(self):
+        with self.assertRaises(LarkError):
+            _extract({'ok': True, 'data': ['not an event']}, 'calendar')
+
     def test_bad_pagination_blocked(self):
         with self.assertRaises(LarkError): _extract({'items': [], 'has_more': 'false'}, 'tasks')
 

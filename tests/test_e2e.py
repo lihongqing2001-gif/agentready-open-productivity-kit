@@ -24,7 +24,8 @@ if 'calendar' in args and os.getenv('TEST_DENY'):
     print(json.dumps({'ok': False, 'error': {'missing_scopes': ['calendar:calendar.event:read']}}), file=sys.stderr)
     sys.exit(3)
 key = 'events' if 'calendar' in args else 'messages' if 'im' in args else 'items'
-print(json.dumps({'ok': True, 'data': {key: [{'summary':'Synthetic only','url':'https://example.org/source'}], 'has_more':False}}))
+rows = [{'summary':'Synthetic only','url':'https://example.org/source'}]
+print(json.dumps({'ok': True, 'data': rows if 'calendar' in args else {key: rows, 'has_more':False}}))
 ''')
             cli.chmod(0o755)
             env = {**os.environ, 'HOME': tmp, 'PATH': tmp + os.pathsep + os.environ['PATH']}

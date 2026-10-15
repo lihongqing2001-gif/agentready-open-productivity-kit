@@ -97,6 +97,8 @@ def _extract(payload: Any, source: str) -> tuple[list[dict], bool, str]:
         child = payload.get(key)
         if isinstance(child, dict):
             wrappers.append(child)
+        elif isinstance(child, list):
+            wrappers.append({key: child})
     # Real-world CLI shapes vary between versions; never count an object as one task.
     search_keys = {'tasks': ['tasks', 'items', 'task_items', 'list'],
                    'calendar': ['events', 'items', 'event_list', 'list'],
@@ -110,7 +112,7 @@ def _extract(payload: Any, source: str) -> tuple[list[dict], bool, str]:
                     raise LarkError(f'{source}: malformed pagination flag')
                 more = more or wrapper[flag]
     for wrapper in wrappers:
-        for key in search_keys[source]:
+        for key in search_keys[source] + ['data', 'result']:
             rows = wrapper.get(key)
             if isinstance(rows, list):
                 if not all(isinstance(x, dict) for x in rows):
