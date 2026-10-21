@@ -17,3 +17,15 @@ Read `docs/WORKFLOWS.md` first. Work with whatever apps the user already prefers
 Separate company and private information in output; use the official native UI to modify the canonical record.
 
 For personal counts, preview `python3 agentready.py personal-brief`, then use `--live` only with authorized native reads. It reuses ekctl, remindctl and dayflow; never starts capture. Keep personal and company output separate. TCC and iPhone verification remain human gates.
+
+## Connected work recap
+
+When the user requests Dayflow + Codex + Feishu reporting, read
+`docs/REPORTING_WORKFLOW.md`. Reuse the existing daily sender; enrich its report
+with `weekly-review --period daily` evidence plus scoped Codex conclusions.
+Group actual outcomes, ongoing work, blockers and tomorrow's actions; cite
+source IDs and distinguish Dayflow observations from completed work. Never
+include personal projects in company delivery by default. Save a private local
+Markdown, deliver through the authorized private route if requested, and verify
+message ID/readback. A standing recurring-delivery authorization does not need
+fresh confirmation every day. Do not infer a missing source as zero work.

@@ -31,6 +31,8 @@ jobs:
           python3 agentready.py verify --service homebox --url http://127.0.0.1:17745
           python3 agentready.py brief --date 2026-10-15 --fixture-dir examples/fixtures --message-query 待办
           python3 agentready.py brief
+      - name: Review synthetic smoke
+        run: python3 agentready.py weekly-review --date 2026-10-21 --fixture-dir examples/review-fixtures
       - name: Personal offline smoke
         run: python3 agentready.py personal-brief
       - name: Upload synthetic evidence

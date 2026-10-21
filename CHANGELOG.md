@@ -30,3 +30,14 @@
 ### Not shipped
 
 - Silent OAuth or macOS privacy grant, cross-service ETL, verified calendar access, company-data export, actual iPhone UI, signed app, or public GitHub repository.
+
+## Connected reporting workflow (v0.4 preview)
+
+- Reusable Dayflow/Codex/Feishu onboarding, daily supplement and Monday weekly
+  review Skills; one existing agent and one scheduler per delivery workflow.
+- Explicit private evidence collection from selected work chats, native Dayflow
+  activity and dated Codex checkpoints/Git evidence; missing sources remain partial.
+- Self-only Feishu report delivery with verified user identity, saved attempt
+  receipts and idempotency keys; dry-run by default, no screenshot/media uploads.
+- Synthetic end-to-end authentication/read/delivery tests and CI smoke coverage.
+  Installed schedules and fixtures do not establish future live delivery.

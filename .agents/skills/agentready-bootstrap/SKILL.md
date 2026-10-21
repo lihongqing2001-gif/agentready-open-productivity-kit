@@ -17,3 +17,11 @@ Read the project `README.md`, `AGENTS.md`, and `docs/AUTHORIZATION.md` first.
 8. Generate `report --profile <name> --output .reports/onboarding.md` for a repeatable checklist. Provide evidence, service owner and next action. Stop when a boundary or provider identity is unresolved.
 
 Never move company messages or code into a personal instance without permitted scope. No duplicate cron or AI gateway. Do not call `brew bundle cleanup`, change machine security policy, or promise a one-click authorization bypass.
+
+For the Dayflow + Codex + Feishu daily/weekly workflow, follow
+`docs/REPORTING_WORKFLOW.md` as the one-time setup and acceptance checklist.
+Check the installed version against official releases before installing;
+consolidate native authorization clicks, verify actual capture/analysis and
+CLI/MCP reads, then use the existing agent and one scheduler. An existing grant
+or requested install batch is authorization; do not ask for each reversible
+step again. No new gateway, Hermes service or raw screenshot export is required.

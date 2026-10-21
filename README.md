@@ -194,3 +194,21 @@ The optional Codex launcher preserves provider/model/credentials and writes a
 private PID/log/exit-status receipt. It is a one-shot shell process, not a
 persistent OS scheduler; close/logout/sleep survival is not guaranteed.
 See `docs/PUBLISH_GITHUB.md` for publication gates. Never publish `.reports/`.
+
+## Connected daily and Monday weekly reports
+
+Use `agentready-bootstrap`, `agentready-daily-brief` and
+`agentready-weekly-review` with your existing agent. The workflow combines
+Feishu daily reports/weekend updates, Dayflow work observations and scoped
+Codex checkpoints into a private local Markdown; optional self-DM delivery
+uses the verified official lark-cli identity with a saved idempotency receipt.
+See [one-time setup, evidence and scheduling](docs/REPORTING_WORKFLOW.md).
+No screenshot upload, new agent or additional scheduler is required.
+
+```bash
+python3 agentready.py weekly-review # offline plan, no reads
+python3 agentready.py weekly-review --date 2026-10-21 --fixture-dir examples/review-fixtures
+```
+
+The CLI collects evidence. Your agent writes the narrative; synthetic tests do
+not prove live authentication, delivery, or a future scheduled run.

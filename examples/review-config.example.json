@@ -1,0 +1,8 @@
+{
+  "lark_profile": "YOUR_WORK_PROFILE",
+  "daily_chat_ids": [],
+  "weekend_chat_ids": [],
+  "work_categories": ["Work"],
+  "codex_projects": [],
+  "codex_notes_file": ".reports/work-reviews/codex-checkpoints.json"
+}

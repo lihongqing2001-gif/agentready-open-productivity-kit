@@ -16,6 +16,8 @@ import tempfile
 from agentready_connectors import PROBES, verify as verify_connector
 from agentready_native import build_personal_brief
 from agentready_lark import LarkError, build_brief, markdown_brief
+from agentready_delivery import publish_report
+from agentready_weekly import build_weekly_review, markdown_weekly, read_config
 
 ROOT = Path(__file__).resolve().parent
 REGISTRY = ROOT / 'registry' / 'adapters.json'
@@ -274,12 +276,41 @@ def main(argv=None):
     personal.add_argument('--date', default=dt.date.today().isoformat())
     personal.add_argument('--live', action='store_true')
     personal.add_argument('--output', help='New private JSON report')
+    weekly = sub.add_parser('weekly-review', help='Collect private evidence for the existing agent to write daily/weekly reports')
+    weekly.add_argument('--date', default=dt.date.today().isoformat(), help='Weekly: collect previous Monday-Sunday; daily: collect this date')
+    weekly.add_argument('--config', help='Private review configuration (no secrets)')
+    weekly.add_argument('--period', choices=['daily', 'weekly'], default='weekly')
+    weekly.add_argument('--live', action='store_true', help='Explicitly read configured sources')
+    weekly.add_argument('--fixture-dir', help='Synthetic Feishu fixtures for offline tests')
+    weekly.add_argument('--format', choices=['markdown', 'json'], default='markdown')
+    weekly.add_argument('--output', help='Create NEW private report file, never overwrite')
+    delivery = sub.add_parser('publish-report', help='Preview or explicitly deliver a report to your verified Feishu user only')
+    delivery.add_argument('--input', required=True)
+    delivery.add_argument('--lark-profile', required=True)
+    delivery.add_argument('--receipt', required=True, help='Private NEW delivery receipt; preserves ambiguous attempts')
+    delivery.add_argument('--apply', action='store_true')
     args = parser.parse_args(argv)
+    if args.command == 'publish-report':
+        from agentready_lark import commands_for_day
+        commands_for_day(dt.date.today().isoformat(), lark_profile=args.lark_profile)
+        result = publish_report(args.input, args.lark_profile, args.receipt, apply=args.apply)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0
     if args.command == 'personal-brief':
         result = build_personal_brief(args.date, live=args.live)
         data = json.dumps(result, ensure_ascii=False, indent=2) + '\n'
         if args.output: print(f'Personal brief created: {write_new(args.output, data)}')
         else: print(data, end='')
+        return 1 if result.get('status') == 'partial' else 0
+    if args.command == 'weekly-review':
+        result = build_weekly_review(args.date, config=read_config(args.config) if args.config else None,
+                                     period=args.period, live=args.live, fixture_dir=args.fixture_dir)
+        data = (json.dumps(result, ensure_ascii=False, indent=2) + '\n'
+                if args.format == 'json' else markdown_weekly(result))
+        if args.output:
+            print(f'Weekly review created: {write_new(args.output, data)}')
+        else:
+            print(data, end='')
         return 1 if result.get('status') == 'partial' else 0
     if args.command == 'brief':
         result = build_brief(args.date, live=args.live, fixture_dir=args.fixture_dir,
