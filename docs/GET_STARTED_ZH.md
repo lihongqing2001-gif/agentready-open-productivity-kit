@@ -1,60 +1,50 @@
-# AgentReady v0.4 — 给普通用户的五步使用指南
+# AgentReady v0.4：普通用户快速开始
 
-AgentReady 是一套 **给现有 AI Agent 使用的技能和工具箱**，不是另一款 AI 聊天应用，也不是必须部署的服务器。用户无需拥有 Hermes、飞书或 NocoBase；这些只是可选软件。
+AgentReady 是一组可下载的 Agent Skills 和本地工具，用来复用你已有的 Dayflow、Codex 或其他 Agent、飞书 CLI 和 Apple 原生应用。它不是另一套聊天服务或日历系统；Hermes 是可选的。
 
-## 0. 需要准备什么
+## 下载并启动
 
-- macOS 用户：Python 3（用于生成计划）、现有 Codex 或其他能调用本地项目指令的 Agent。安装软件时可以选用 Homebrew。
-- Windows/Linux 用户：目前仅提供规划与检查，不执行自动软件安装。
-- 对隐私敏感的用户可以不启用录屏、云服务或任何网络探测。
+从 GitHub 下载 ZIP 解压，或克隆仓库：
 
-## 1. 打开仓库
+```bash
+git clone https://github.com/lihongqing2001-gif/agentready-open-productivity-kit.git
+```
 
-下载或克隆项目后，在 Agent（如 Codex）中打开项目目录，让 Agent 阅读 `README.md` 与 `.agents/skills/agentready-bootstrap/SKILL.md`，并说：
+在 Codex 或支持 Agent Skills 的客户端中打开仓库，并输入：
 
-> 帮我用 AgentReady 初始化个人效率环境。先只检测和出方案。我的目标是管理日程、待办和个人物品，优先复用已安装软件，不新增重复 AI 服务。请解释每项将进行的真实修改。
+> 使用 `agentready-workflow`，带我一次性配置 Dayflow、当前 Agent 和飞书的日报/周报。先检查并复用已有软件与连接；把需要我点的系统权限集中列出。完成授权后做真实只读验证，配置一个日报/周报发送方，不创建重复调度。我的公司数据只能留在我选定的公司通道。
 
-## 2. 按预设生成环境报告（离线）
+如果 Agent 没有自动发现 `.agents/skills/`，按该 Agent 的官方说明，将需要的 Skill 文件夹安装到它支持的目录；不要覆盖同名 Skill。保留仓库，因为 Skills 会引用仓库里的 `agentready.py` 和文档。Skills 不会自动获得终端、屏幕录制、MCP 或账号权限。
+
+## 检查与选择
+
+环境检测默认离线，不安装、不登录：
 
 ```bash
 python3 agentready.py doctor --profile starter
 python3 agentready.py coverage --profile starter
 python3 agentready.py report --profile starter --output .reports/onboarding.md
-```
-
-预设：`starter`（基础）、`team`（飞书工作）、`life`（生活/物品）、`power`（工作生活全套）。不强制任何预设安装所有软件。
-
-## 3. 用交互向导选择自己需要的东西
-
-```bash
 python3 agentready.py wizard --profile life --output my-config.json
 python3 agentready.py plan --profile life --config my-config.json
 ```
 
-向导只保存选中的软件名称，不保存账号、密码、密钥、日历或聊天数据。
-
-## 4. 只在确认后安装、登录与授权
+预设有 `starter`、`team`、`life`、`power`。安装预览不会更改设备；只有明确批准安装批次后，才执行 macOS 安装：
 
 ```bash
-python3 agentready.py install --profile life --config my-config.json  # 默认只预览
-python3 agentready.py permissions --profile life --config my-config.json
-# 真正安装仅支持 macOS，并需要明确批准
+python3 agentready.py install --profile life --config my-config.json
 python3 agentready.py install --profile life --config my-config.json --apply
 ```
 
-macOS 的屏幕录制、日历、提醒事项等系统权限以及飞书 OAuth 等仍由用户本人授权，工具不能静默代替用户点击。
+## 一次授权、真实验收
 
-## 5. 选择性检查已部署服务连接（可选）
+按 `agentready-workflow` 和 `docs/REPORTING_WORKFLOW.md` 完成 Dayflow 官方版本检查、录屏与 AI 分析选择、已有 agent 的 CLI/MCP 接入、飞书 OAuth、私有配置及唯一调度。需要系统设置或浏览器登录的权限由本人完成；助手应集中列出这些步骤，不得绕过 TCC 或复制凭据。
 
-```bash
-# 无 --live 时不会联网
-python3 agentready.py verify --service homebox --url http://127.0.0.1:17745
-# 用户同意后才真正测试本地服务可达性
-python3 agentready.py verify --service homebox --url http://127.0.0.1:17745 --live
-```
+分别验收 Dayflow 的真实采集→分析→Timeline→CLI/MCP 读取，以及飞书日历/任务所需的真实只读调用。只看到软件已安装、登录成功或 MCP 握手，不代表业务流程通过。选择一个日报最终发送方；如使用已有日报 bot 合并，先确认其授权入口，再核对接收回执、合并报告、消息 ID 和原私聊读回。公司数据留在用户指定的公司通道，原始截图不进入报告。
 
-当前提供 **HomeBox/NocoBase 两种固定路由的诊断探针**，不是自动连接所有账号。HTTP 可达不等于用户已登录；MCP 握手成功不等于能读取授权数据。真实日历和工作流要另行验收。
+## 日常使用与验收状态
 
-## 最终你能得到什么？
+日报使用上一个本地自然日；周一周报覆盖上周一至周日并核查真实周末消息。报告为本地私有 Markdown，结合明确授权的飞书日报/任务、本机 Dayflow 工作观察和有来源 ID 的 Codex 结论。观察、计划和提交记录都不能单独证明业务完成；缺失数据必须标为 PARTIAL/BLOCKED。
 
-当前版本可以获得：设备现状清单、选用的软件组合、安装计划、授权清单、能力覆盖图和可选服务诊断。v0.4 支持只读飞书简报与个人原生工具统计；真实授权、录屏分析、iPhone 同步仍需分别验收。 日报和收集箱 Skills 已有操作说明，但需要真实且已授权的提供方连接后才能执行。
+调度必须复用现有任务并确认仅有一个最终发送方。启用调度不等于验收：首次定时运行后还要核对来源回执、消息 ID、目标会话和读回。电脑休眠或离线时可能错过运行，应按周期幂等补跑一次。
+
+Skills 不携带任何用户的账号、公司聊天、私有路径、Dayflow 截图或云端权限。工作与个人数据默认分开；Reminders、日历的跨设备同步需分别在设备上验证。

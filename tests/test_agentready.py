@@ -56,6 +56,11 @@ class AgentReadyTests(unittest.TestCase):
             self.assertIn('name: ' + f.parent.name, data)
             self.assertIn('\ndescription:', data)
 
+    def test_downloadable_workflow_skill_covers_setup_and_acceptance(self):
+        data = (ROOT / '.agents' / 'skills' / 'agentready-workflow' / 'SKILL.md').read_text().lower()
+        for term in ('dayflow', 'codex', 'feishu', 'daily', 'weekly', 'deduplicated', 'readback'):
+            self.assertIn(term, data)
+
     def test_public_source_contains_no_private_example_hosts(self):
         registry = (ROOT / 'registry' / 'adapters.json').read_text()
         self.assertNotIn('bluefocus', registry.lower())

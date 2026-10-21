@@ -94,15 +94,17 @@ A successful status URL is **only service reachability**; a successful MCP `init
 
 Endpoint probes support HomeBox and NocoBase; a separate `brief --live` command now invokes existing lark-cli only with explicit opt-in. For Feishu, Apple Calendar, Hermes and Dayflow, follow their native sign-in/CLI/MCP instructions; they are **not** silently authenticated by this CLI. See [v0.2 connector contract](docs/CONNECTORS.md).
 
-## Five reusable skills
+## Reusable skills
 
 - **agentready-bootstrap** — machine setup, profiles, permissions, migrations.
 - **agentready-integration-audit** — inspect native apps, CLI/MCP and reuse before adding services.
 - **agentready-daily-brief** — morning, evening and weekly digests, grounded in connected sources.
+- **agentready-weekly-review** — evidence-based Monday weekly report with deduplication and partial-source handling.
 - **agentready-lark-brief** — Feishu user-OAuth tasks/calendar briefing using lark-cli, no Hermes required.
 - **agentready-capture** — convert user-authorized messages into draft tasks, events, records and assets.
+- **agentready-workflow** — one-time setup and recurring Dayflow + Codex + Feishu daily/weekly reporting, with a single configured delivery route.
 
-Skills live under `.agents/skills/`. In Codex, open this repository as a workspace and request: “Use agentready-bootstrap. Inspect this Mac and plan a work + life setup.” For other compatible agents, follow that agent's documented skill directory and registration process. Skills do **not** automatically grant tool permissions.
+Skills live under `.agents/skills/`. Download or clone this repository, open it in Codex or another compatible agent, then request: “Use `agentready-workflow` to set up and verify my Dayflow + Codex + Feishu daily and weekly reports.” If the agent does not discover repository Skills, follow its official instructions to copy the needed Skill folders without overwriting existing Skills. Keep this checkout available because its Skills reference the repository CLI and docs. Skills do **not** automatically grant tool permissions.
 
 ## Design principles
 
@@ -197,11 +199,11 @@ See `docs/PUBLISH_GITHUB.md` for publication gates. Never publish `.reports/`.
 
 ## Connected daily and Monday weekly reports
 
-Use `agentready-bootstrap`, `agentready-daily-brief` and
-`agentready-weekly-review` with your existing agent. The workflow combines
+Use `agentready-workflow` with your existing agent. It guides initial setup and
+authorization, verifies live Dayflow and scoped lark-cli reads, then combines
 Feishu daily reports/weekend updates, Dayflow work observations and scoped
-Codex checkpoints into a private local Markdown; optional self-DM delivery
-uses the verified official lark-cli identity with a saved idempotency receipt.
+Codex conclusions into private Markdown. Configure one final publisher: either
+an authorized self-DM route or an existing reporting agent's approved intake.
 See [one-time setup, evidence and scheduling](docs/REPORTING_WORKFLOW.md).
 No screenshot upload, new agent or additional scheduler is required.
 

@@ -30,8 +30,8 @@ install another agent, model server, database or scheduler. Hermes is optional.
    does not prove MCP registration or activation. Do not launch a second server
    or copy another user's MCP configuration/keys.
 5. Reuse the existing official lark-cli profile; verify
-   `lark-cli --profile YOUR_PROFILE auth status --json --verify`. Business calls
-   use `--as user`. Let native OAuth handle required scopes; do not copy tokens
+   `lark-cli --profile YOUR_PROFILE auth status --json --verify`. Business reads
+   use `--as user`; report delivery defaults to `--as bot` after user authorization. Let native OAuth handle required scopes; do not copy tokens
    or create a second company app. A missing scope blocks only that source.
 6. Copy `examples/review-config.example.json` into a private, ignored directory.
    Fill only the selected work chat IDs, allowed work categories and local
@@ -44,9 +44,12 @@ install another agent, model server, database or scheduler. Hermes is optional.
 7. Perform one real capture → analysis → Timeline → CLI/MCP read. Record dates,
    native day-boundary hour, source ID and limitations. Native Daily unlock can
    require actual elapsed activity; do not modify flags or fabricate history.
-8. Select one authoritative reporting scheduler. Inspect existing jobs before
-   adding one; preserve unrelated services. Verify delivery once, then enable
-   the requested schedule. OS permissions and interactive logins remain manual.
+8. Select one final report publisher and inspect existing jobs before adding
+   schedules. In a split local/cloud workflow, a local supplier may run before
+   the existing publisher to provide evidence; this is not a second daily
+   sender. If there is no existing publisher, configure one native schedule.
+   Preserve unrelated services. Verify delivery once, then enable the requested
+   schedule. OS permissions and interactive logins remain manual.
 
 ## Evidence → narrative → private delivery
 
@@ -86,8 +89,9 @@ screen activity, commits, plans and validated outcomes. Git changes are evidence
 of changes, not proof of Codex authorship. Local Codex conclusions must name the
 thread/checkpoint and distinguish success from proposed work or tests not run.
 
-`publish-report` authenticates and targets only the currently verified user;
-it never sends to a group, other user or collaborator. Plain text avoids CLI
+`publish-report` defaults to the verified app bot and targets only the currently verified user;
+use `--as user` only when explicitly requested. It requires the bot to have send permission.
+It never sends to a group, other user or collaborator. Plain text avoids CLI
 Markdown image fetching. It stores an attempt receipt before the request and
 uses an idempotency key. A timeout/ambiguous result requires readback rather
 than blind replay. Existing bot-DM delivery may instead be used through its
@@ -118,3 +122,17 @@ an unrelated message-delivery error. Private output never goes into public Git.
   local Markdown artifact, a delivered Feishu message ID and readback.
 - Enabled scheduling is not a completed future run. Record the first scheduled
   execution separately. Other agents/OS versions require their own handshake.
+
+### When the destination is another reporting agent
+
+Sending identity and receiving agent are separate choices. A successful app-to-user DM does not prove delivery to another bot or integration with its report job. When the user wants an existing reporting agent to consolidate local evidence, preserve that agent as the destination. Verify its approved intake and application identity, then require a supplement receipt and the consolidated report message readback. Never replace that workflow with a second self-DM report merely because the self-DM API succeeds.
+
+Prepare a scoped supplement containing period/timezone, dedupe key, dated source IDs, actual outcomes, observations, ongoing work, blockers and proposed next actions. Ask the existing reporter to merge its full daily reports and actual weekend messages. Lead the narrative with business goals, concrete outputs and impact; put tool setup and test totals in supporting evidence. A partial evidence packet, a delivered message and an accepted consolidated report are distinct states.
+
+For a split local/cloud workflow, keep one final publisher. The local agent can
+supply a previous-day packet before the existing cloud reporting job, adding a
+previous-week packet on Mondays. A local supplier and an existing cloud publisher
+have different responsibilities; inspect their schedules to avoid a race or two
+final reports. The receiving agent must acknowledge the period/deduplication key
+and distinguish the person's delivered work from wider team updates. Keep its
+actual final Markdown locally after verifying sender and destination.
